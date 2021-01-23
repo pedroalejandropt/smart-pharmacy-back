@@ -7,7 +7,7 @@ def get():
     Get all entities
     :returns: all entity
     '''
-    return Role.query.all()
+    return Role.query.filter_by(delete = False)
 
 def post(body):
     '''
