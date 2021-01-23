@@ -4,6 +4,7 @@ from config import db
 
 class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    delete = db.Column(db.Boolean, nullable=False)
     name = db.Column(db.String(50), nullable=False)
 
     def __init__(self, name, delete=False, id=None):
