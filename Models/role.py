@@ -6,7 +6,10 @@ class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
 
-    def __init__(self, name):
+    def __init__(self, name, delete=False, id=None):
+        if id != None:
+            self.id = id
+        self.delete = delete
         self.name = name
 
     # Gets dict with the Role object
