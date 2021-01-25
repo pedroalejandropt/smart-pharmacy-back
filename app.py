@@ -3,12 +3,14 @@ from Controllers.user_controller import api_user
 from Controllers.role_controller import api_role
 from Controllers.category_controller import api_category
 from Controllers.subcategory_controller import api_subcategory
+from Controllers.product_controller import api_product
 
 # Register the API
 app.register_blueprint(api_role)
 app.register_blueprint(api_user)
 app.register_blueprint(api_category)
 app.register_blueprint(api_subcategory)
+app.register_blueprint(api_product)
 
 @app.route('/')
 def main_page():
