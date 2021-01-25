@@ -6,8 +6,9 @@ from Models.category import Category
 
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    delete = db.Column(db.Boolean, nullable=False)
     code = db.Column(db.Integer, nullable=False)
-    codename = db.Column(db.String(100), nullable=False)
+    codebar = db.Column(db.String(100), nullable=False)
     name = db.Column(db.String(200), nullable=False)
     price = db.Column(db.Float(), nullable=False)
     freeze = db.Column(db.Integer, nullable=False)
@@ -19,9 +20,12 @@ class Product(db.Model):
     labProviderName = db.Column(db.String(200), nullable=False)
     subcategory_id = db.Column(db.Integer, db.ForeignKey('subcategory.id'), nullable=False)
 
-    def __init__(self, code, codename, name, price, freeze, tax, recipe, regulated, rating, replacementClassification, labProviderName, subcategory_id):
+    def __init__(self, code, codebar, name, price, freeze, tax, recipe, regulated, rating, replacementClassification, labProviderName, subcategory_id, delete=False, id=None):
+        if id != None:
+            self.id = id
+        self.delete = delete
         self.code = code
-        self.codename = codename
+        self.codebar = codebar
         self.name = name
         self.price = price
         self.freeze = freeze
@@ -42,7 +46,7 @@ class Product(db.Model):
         return {
             'id': self.id,
             'code': self.code,
-            'codename': self.codename,
+            'codebar': self.codebar,
             'name': self.name,
             'price': self.price,
             'freeze': self.freeze,
