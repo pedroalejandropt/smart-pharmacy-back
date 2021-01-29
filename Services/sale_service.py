@@ -1,5 +1,5 @@
-from Models.product import Product
-from Models.user_product import User_Product
+from Models.sale import Sale
+from Models.product_sale import Product_Sale
 from config import db
 from werkzeug.exceptions import NotFound
 
@@ -8,31 +8,31 @@ def get():
     Get all entities
     :returns: all entity
     '''
-    return Product.query.filter_by(delete = False)
+    return Sale.query.filter_by(delete = False)
 
 def get_by_id(id):
     '''
     Get entitiy
     :returns: entity
     '''
-    return Product.query.filter_by(id=id).first()
+    return Sale.query.filter_by(id=id).first()
 
-def post(body, user_body):
+def post(body, product_body):
     '''
     Create entity with body
     :param body: request body
     :returns: the created entity
     '''
-    product = Product(**body)
-    db.session.add(product)
+    sale = Sale(**body)
+    db.session.add(sale)
     db.session.commit()
 
-    user_body['product_id'] = product.id
+    product_body['sale_id'] = sale.id
 
-    user_product = User_Product(**user_body)
-    db.session.add(user_product)
+    product_sale = Product_Sale(**product_body)
+    db.session.add(product_sale)
     db.session.commit()
-    return product
+    return sale
 
 def put(body):
     '''
@@ -40,14 +40,14 @@ def put(body):
     :param body: request body
     :returns: the updated entity
     '''
-    product = Product.query.get(body['id'])
+    sale = Sale.query.get(body['id'])
 
-    if product:
-        product = Product(**body)
-        db.session.merge(product)
+    if sale:
+        sale = Sale(**body)
+        db.session.merge(sale)
         db.session.flush()
         db.session.commit()
-        return product
+        return sale
     raise NotFound('no such entity found with id=' + str(body['id']))
 
 def delete(id):
@@ -56,12 +56,12 @@ def delete(id):
     :param body: request body
     :returns: the updated entity
     '''
-    product = Product.query.get(id)
+    sale = Sale.query.get(id)
     
-    if product:
-        product.delete = True
-        db.session.merge(product)
+    if sale:
+        sale.delete = True
+        db.session.merge(sale)
         db.session.flush()
         db.session.commit()
-        return product
+        return sale
     raise NotFound('no such entity found with id=' + str(id))

@@ -1,5 +1,5 @@
-from Models.product import Product
-from Models.user_product import User_Product
+from Models.exchange import Exchange
+from Models.user_exchange import User_Exchange
 from config import db
 from werkzeug.exceptions import NotFound
 
@@ -8,14 +8,14 @@ def get():
     Get all entities
     :returns: all entity
     '''
-    return Product.query.filter_by(delete = False)
+    return Exchange.query.filter_by(delete = False)
 
 def get_by_id(id):
     '''
     Get entitiy
     :returns: entity
     '''
-    return Product.query.filter_by(id=id).first()
+    return Exchange.query.filter_by(id=id).first()
 
 def post(body, user_body):
     '''
@@ -23,16 +23,16 @@ def post(body, user_body):
     :param body: request body
     :returns: the created entity
     '''
-    product = Product(**body)
-    db.session.add(product)
+    exchange = Exchange(**body)
+    db.session.add(exchange)
     db.session.commit()
 
-    user_body['product_id'] = product.id
+    user_body['exchange_id'] = exchange.id
 
-    user_product = User_Product(**user_body)
-    db.session.add(user_product)
+    user_exchange = User_Exchange(**user_body)
+    db.session.add(user_exchange)
     db.session.commit()
-    return product
+    return exchange
 
 def put(body):
     '''
@@ -40,14 +40,14 @@ def put(body):
     :param body: request body
     :returns: the updated entity
     '''
-    product = Product.query.get(body['id'])
+    exchange = Exchange.query.get(body['id'])
 
-    if product:
-        product = Product(**body)
-        db.session.merge(product)
+    if exchange:
+        exchange = Exchange(**body)
+        db.session.merge(exchange)
         db.session.flush()
         db.session.commit()
-        return product
+        return exchange
     raise NotFound('no such entity found with id=' + str(body['id']))
 
 def delete(id):
@@ -56,12 +56,12 @@ def delete(id):
     :param body: request body
     :returns: the updated entity
     '''
-    product = Product.query.get(id)
+    exchange = Exchange.query.get(id)
     
-    if product:
-        product.delete = True
-        db.session.merge(product)
+    if exchange:
+        exchange.delete = True
+        db.session.merge(exchange)
         db.session.flush()
         db.session.commit()
-        return product
+        return exchange
     raise NotFound('no such entity found with id=' + str(id))

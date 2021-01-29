@@ -1,6 +1,9 @@
 from config import app, db
 from Controllers.user_controller import api_user
 from Controllers.role_controller import api_role
+from Controllers.sale_controller import api_sale
+from Controllers.product_controller import api_product
+from Controllers.exchange_controller import api_exchange
 from Controllers.category_controller import api_category
 from Controllers.subcategory_controller import api_subcategory
 
@@ -9,6 +12,9 @@ app.register_blueprint(api_role)
 app.register_blueprint(api_user)
 app.register_blueprint(api_category)
 app.register_blueprint(api_subcategory)
+app.register_blueprint(api_product)
+app.register_blueprint(api_exchange)
+app.register_blueprint(api_sale)
 
 @app.route('/')
 def main_page():
