@@ -1,6 +1,4 @@
 from flask_sqlalchemy import SQLAlchemy
-from Models.product import Product
-from Models.sale import Sale
 from flask import Flask
 from config import db
 
