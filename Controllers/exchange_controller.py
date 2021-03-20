@@ -15,7 +15,7 @@ api_exchange = Blueprint('exchanges', 'exchanges')
 def api_get(current_user):
     ''' Get all entities'''
     exchanges = exchange_service.get()
-    return jsonify([exchange.as_dict() for exchange in exchanges])
+    return jsonify([exchange.serialize for exchange in exchanges])
 
 @api_exchange.route('/api/v1/exchanges/<id>', methods=['GET'])
 @token_required
