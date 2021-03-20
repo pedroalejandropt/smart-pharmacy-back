@@ -10,6 +10,13 @@ def get():
     '''
     return Product.query.filter_by(delete = False)
 
+def get_by_barcode(id):
+    '''
+    Get entitiy
+    :returns: entity
+    '''
+    return Product.query.filter_by(codebar=id).first()
+
 def get_by_id(id):
     '''
     Get entitiy
