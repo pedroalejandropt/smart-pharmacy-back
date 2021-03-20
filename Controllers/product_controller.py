@@ -24,6 +24,13 @@ def api_get_by_id(current_user, id=0):
     product = product_service.get_by_id(id)
     return jsonify(product.serialize)
 
+@api_product.route('/api/v1/products/barcode/<id>', methods=['GET'])
+@token_required
+def api_get_by_barcode(current_user, id=0):
+    ''' Get all entities'''
+    product = product_service.get_by_barcode(id)
+    return jsonify(product.serialize)
+
 @api_product.route('/api/v1/products', methods=['POST'])
 def api_post():
     ''' Create entity'''
