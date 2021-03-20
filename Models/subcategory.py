@@ -24,7 +24,8 @@ class Subcategory(db.Model):
         return {
             'id': self.id,
             'name': self.name,
-            'category': category.name
+            'category': category.name,
+            'category_id': self.category_id
         }
 
     def as_dict(self):
