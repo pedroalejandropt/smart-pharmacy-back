@@ -15,7 +15,7 @@ api_subcategory = Blueprint('subcategories', 'subcategories')
 def api_get(current_user):
     ''' Get all entities'''
     subcategories = subcategory_service.get()
-    return jsonify([subcategory.as_dict() for subcategory in subcategories])
+    return jsonify([subcategory.serialize for subcategory in subcategories])
 
 @api_subcategory.route('/api/v1/subcategories', methods=['POST'])
 @token_required
