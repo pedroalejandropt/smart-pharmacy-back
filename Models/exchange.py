@@ -1,3 +1,4 @@
+import datetime
 from config import db
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -21,7 +22,9 @@ class Exchange(db.Model):
         """Return object data in easily serializeable format"""
         return {
             'id': self.id,
-            'date': self.date,
+            'datetime': self.date,
+            'date': self.date.strftime("%Y-%m-%d"),
+            'time': (self.date - datetime.timedelta(minutes = 240)).strftime("%H:%M:%S"),
             'amount': self.amount
         }
 
