@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import *
 from config import db
 from Models.role import Role
 
@@ -50,4 +50,14 @@ class User(db.Model):
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+def insert_initial_values(*args, **kwargs):
+    db.session.add(Role(name='Gerente General'))
+    db.session.add(Role(name='Gerente de Logística'))
+    db.session.commit()
+    db.session.add(User(identificationNumber= 43563456,firstName= 'Pedro', middleName= 'Alejandro',lastName= 'Pacheco',secondLastName= 'Tripi',email= 'pedro@gmail.com',password= '123456',role_id= 1))
+    db.session.add(User(identificationNumber= 35450989,firstName= 'Annemarie', middleName= '',lastName= 'Rolo',secondLastName= 'Andrade',email= 'annemarie@gmail.com',password= '654321',role_id= 1))
+    db.session.commit()
+
+event.listen(User.__table__, 'after_create', insert_initial_values)
 
