@@ -15,7 +15,7 @@ api_product = Blueprint('products', 'products')
 def api_get(current_user):
     ''' Get all entities'''
     products = product_service.get()
-    return jsonify([product.as_dict() for product in products])
+    return jsonify([product.serialize for product in products])
 
 @api_product.route('/api/v1/products/<id>', methods=['GET'])
 @token_required
