@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import *
 from config import db
 from Models.category import Category
 
@@ -31,3 +31,10 @@ class Subcategory(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
+def insert_initial_values(*args, **kwargs):
+    db.session.add(Category(name='Medicamentos'))
+    db.session.commit()
+    db.session.add(Subcategory(name='Malestar General', category_id=1))
+    db.session.commit()
+
+event.listen(Subcategory.__table__, 'after_create', insert_initial_values)
