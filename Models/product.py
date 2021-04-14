@@ -7,7 +7,7 @@ from Models.category import Category
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     delete = db.Column(db.Boolean, nullable=False)
-    code = db.Column(db.Integer, nullable=False)
+    code = db.Column(db.Numeric(100), nullable=False)
     codebar = db.Column(db.String(100), nullable=False)
     name = db.Column(db.String(200), nullable=False)
     price = db.Column(db.Float(), nullable=False)
@@ -45,7 +45,7 @@ class Product(db.Model):
         category = Category.query.filter_by(id = subcategory.category_id).first()
         return {
             'id': self.id,
-            'code': self.code,
+            'code': str(self.code),
             'codebar': self.codebar,
             'name': self.name,
             'price': self.price,
@@ -56,8 +56,7 @@ class Product(db.Model):
             'rating': self.rating,
             'replacementClassification': self.replacementClassification,
             'labProviderName': self.labProviderName,
-            'category': category.name,
-            'subcategory': subcategory.name
+            'subcategory_id': self.subcategory_id
         }
 
     def as_dict(self):
