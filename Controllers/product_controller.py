@@ -44,8 +44,8 @@ def api_post():
             'name' not in product or 'price' not in product or \
                 'freeze' not in product or 'tax' not in product or \
                     'recipe' not in product or 'regulated' not in product or \
-                        'rating' not in product or 'replacementClassification' not in product or \
-                          'labProviderName' not in product or 'subcategory_id' not in product:
+                        'rating' not in product or 'replacement_classification' not in product or \
+                          'lab_provider_name' not in product or 'subcategory_id' not in product:
                           return bad_request('Missing required data.')
         if 'user_id' not in user_product:
             return bad_request('Missing required data.')

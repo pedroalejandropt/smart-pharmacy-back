@@ -8,7 +8,7 @@ class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     delete = db.Column(db.Boolean, nullable=False)
     code = db.Column(db.Numeric(100), nullable=False)
-    codebar = db.Column(db.String(100), nullable=False)
+    codebar = db.Column(db.Numeric(100), nullable=False)
     name = db.Column(db.String(200), nullable=False)
     price = db.Column(db.Float(), nullable=False)
     freeze = db.Column(db.Integer, nullable=False)
@@ -16,11 +16,11 @@ class Product(db.Model):
     recipe = db.Column(db.Integer, nullable=False)
     regulated = db.Column(db.Integer, nullable=False)
     rating = db.Column(db.Integer, nullable=False)
-    replacementClassification = db.Column(db.Integer, nullable=False)
-    labProviderName = db.Column(db.String(200), nullable=False)
+    replacement_classification = db.Column(db.String(100), nullable=False)
+    lab_provider_name = db.Column(db.String(200), nullable=False)
     subcategory_id = db.Column(db.Integer, db.ForeignKey('subcategory.id'), nullable=False)
 
-    def __init__(self, code, codebar, name, price, freeze, tax, recipe, regulated, rating, replacementClassification, labProviderName, subcategory_id, delete=False, id=None):
+    def __init__(self, code, codebar, name, price, freeze, tax, recipe, regulated, rating, replacement_classification, lab_provider_name, subcategory_id, delete=False, id=None):
         if id != None:
             self.id = id
         self.delete = delete
@@ -33,8 +33,8 @@ class Product(db.Model):
         self.recipe = recipe
         self.regulated = regulated
         self.rating = rating
-        self.replacementClassification = replacementClassification
-        self.labProviderName = labProviderName
+        self.replacement_classification = replacement_classification
+        self.lab_provider_name = lab_provider_name
         self.subcategory_id = subcategory_id
 
     # Gets dict with the Product object
@@ -54,8 +54,8 @@ class Product(db.Model):
             'recipe': self.recipe,
             'regulated': self.regulated,
             'rating': self.rating,
-            'replacementClassification': self.replacementClassification,
-            'labProviderName': self.labProviderName,
+            'replacement_classification': self.replacement_classification,
+            'lab_provider_name': self.lab_provider_name,
             'subcategory_id': self.subcategory_id
         }
 

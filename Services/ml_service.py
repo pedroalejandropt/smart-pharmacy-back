@@ -14,7 +14,7 @@ data = {'Year': [], 'Month': [], 'Sales': [], 'Code': []}
 def initial_train():
     ml_data = (Sale.query.join(Product_Sale, Sale.id == Product_Sale.sale_id)
         .join(Product, Product_Sale.product_id == Product.id)
-        .add_columns(Product.code, Sale.year, Sale.month, Sale.salesNumber)
+        .add_columns(Product.code, Sale.year, Sale.month, Sale.sales_number)
         .order_by(Sale.year)
         .order_by(Sale.month)
         .order_by(Product.code)
@@ -23,7 +23,7 @@ def initial_train():
         for item in ml_data:
             data['Year'].append(item.year)
             data['Month'].append(item.month)
-            data['Sales'].append(item.salesNumber)
+            data['Sales'].append(item.sales_number)
             data['Code'].append(item.code)
 
         df = pd.DataFrame(data,columns=['Year','Month','Sales','Code'])
@@ -36,7 +36,7 @@ def train(year, month, product, sales):
     data_train = {'Year': [], 'Month': [], 'Sales': [], 'Code': []}
     data_train['Year'].append(year)
     data_train['Month'].append(month)
-    data_train['Sales'].append(sales.salesNumber)
+    data_train['Sales'].append(sales.sales_number)
     data_train['Code'].append(product.code)
     df = pd.DataFrame(data_train,columns=['Year','Month','Sales','Code'])
     X = df[['Year','Month', 'Code']].astype(float)

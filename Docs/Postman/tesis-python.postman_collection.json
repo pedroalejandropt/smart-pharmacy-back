@@ -722,7 +722,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"product\": {\n        \"code\": 123456789,\n        \"codebar\": \"D234GR23\",\n        \"name\": \"Producto\",\n        \"price\": 120.30,\n        \"freeze\": 0,\n        \"tax\": 0,\n        \"recipe\": 0,\n        \"regulated\": 1,\n        \"rating\": 4,\n        \"replacementClassification\": 3,\n        \"labProviderName\": \"Proveedor\",\n        \"subcategory_id\": 1\n    },\n    \"user\": {\n        \"user_id\": 1\n    }\n}",
+									"raw": "{\n    \"product\": {\n        \"code\": 123456789,\n        \"codebar\": \"D234GR23\",\n        \"name\": \"Producto\",\n        \"price\": 120.30,\n        \"freeze\": 0,\n        \"tax\": 0,\n        \"recipe\": 0,\n        \"regulated\": 1,\n        \"rating\": 4,\n        \"replacement_classification\": 3,\n        \"lab_provider_name\": \"Proveedor\",\n        \"subcategory_id\": 1\n    },\n    \"user\": {\n        \"user_id\": 1\n    }\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -754,7 +754,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"code\": 123456789,\n    \"codebar\": \"D234GR23\",\n    \"name\": \"Producto Editado\",\n    \"price\": 120.30,\n    \"freeze\": 0,\n    \"tax\": 0,\n    \"recipe\": 0,\n    \"regulated\": 1,\n    \"rating\": 4,\n    \"replacementClassification\": 3,\n    \"labProviderName\": \"Proveedor\",\n    \"subcategory_id\": 1\n}",
+									"raw": "{\n    \"code\": 123456789,\n    \"codebar\": \"D234GR23\",\n    \"name\": \"Producto Editado\",\n    \"price\": 120.30,\n    \"freeze\": 0,\n    \"tax\": 0,\n    \"recipe\": 0,\n    \"regulated\": 1,\n    \"rating\": 4,\n    \"replacement_classification\": 3,\n    \"lab_provider_name\": \"Proveedor\",\n    \"subcategory_id\": 1\n}",
 									"options": {
 										"raw": {
 											"language": "json"

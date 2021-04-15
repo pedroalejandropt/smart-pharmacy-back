@@ -38,8 +38,8 @@ def api_post():
         sale = data['sale']
         product_sale = data['product']
         if 'month' not in sale or 'year' not in sale or \
-            'lotNumber' not in sale or 'expirationDate' not in sale or \
-                'salesNumber' not in sale:
+            'lot_number' not in sale or 'expiration_date' not in sale or \
+                'sales_number' not in sale:
                 return bad_request('Missing required data.')
         if 'product_id' not in product_sale:
             return bad_request('Missing required data.')
@@ -76,15 +76,15 @@ def api_upload(current_user):
         product = product_service.get_by_barcode(i["ï»¿codebar"])
         if (product is None):
             verify = True
-            product = { 'code': i['code'], 'codebar': i['ï»¿codebar'], 'name': i['name'], 'price': i['price'], 'freeze': i['freeze'], 'tax': i['tax'], 'recipe': i['recipe'], 'regulated': i['regulated'], 'rating': i['rating'], 'replacementClassification': i['replacementClassification'], 'labProviderName': i['labProviderName'], 'subcategory_id': i['subcategory_id'] }
-            sale = { 'month': i['month'], 'year': i['year'], 'lotNumber': i['lotNumber'], 'expirationDate': i['expirationDate'], 'salesNumber': i['salesNumber'] }
+            product = { 'code': i['code'], 'codebar': i['ï»¿codebar'], 'name': i['name'], 'price': i['price'], 'freeze': i['freeze'], 'tax': i['tax'], 'recipe': i['recipe'], 'regulated': i['regulated'], 'rating': i['rating'], 'replacement_classification': i['replacement_classification'], 'lab_provider_name': i['lab_provider_name'], 'subcategory_id': i['subcategory_id'] }
+            sale = { 'month': i['month'], 'year': i['year'], 'lot_number': i['lot_number'], 'expiration_date': i['expiration_date'], 'sales_number': i['sales_number'] }
             user = { 'user_id': 1 }
             product_added = product_service.post(product, user)
             product_sale = { 'product_id': product_added.id }
             sale_added = sale_service.post(sale, product_sale)
             print('producto/venta agregado')
         else:
-            sale = { 'month': i['month'], 'year': i['year'], 'lotNumber': i['lotNumber'], 'expirationDate': i['expirationDate'], 'salesNumber': i['salesNumber'] }
+            sale = { 'month': i['month'], 'year': i['year'], 'lot_number': i['lot_number'], 'expiration_date': i['expiration_date'], 'sales_number': i['sales_number'] }
             product_sale = { 'product_id': product.id }
             sale_added = sale_service.post(sale, product_sale)
             print('producto existe / Venta Agregada')

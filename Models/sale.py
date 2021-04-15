@@ -9,19 +9,19 @@ class Sale(db.Model):
     delete = db.Column(db.Boolean, nullable=False)
     month = db.Column(db.Integer, nullable=False)
     year = db.Column(db.Integer, nullable=False)
-    lotNumber = db.Column(db.Integer, nullable=False)
-    expirationDate = db.Column(db.DateTime(), nullable=False)
-    salesNumber = db.Column(db.Integer, nullable=False)
+    lot_number = db.Column(db.Integer, nullable=False)
+    expiration_date = db.Column(db.DateTime(), nullable=False)
+    sales_number = db.Column(db.Integer, nullable=False)
 
-    def __init__(self, month, year, lotNumber, expirationDate, salesNumber, delete=False, id=None):
+    def __init__(self, month, year, lot_number, expiration_date, sales_number, delete=False, id=None):
         if id != None:
             self.id = id
         self.delete = delete
         self.month = month
         self.year = year
-        self.lotNumber = lotNumber
-        self.expirationDate = expirationDate
-        self.salesNumber = salesNumber
+        self.lot_number = lot_number
+        self.expiration_date = expiration_date
+        self.sales_number = sales_number
 
     # Gets dict with the Sale Object
     @property
@@ -33,9 +33,9 @@ class Sale(db.Model):
             'id': self.id,
             'month': self.month,
             'year': self.year,
-            'lot number': self.lotNumber,
-            'expiration date': self.expirationDate,
-            'sale number': self.salesNumber,
+            'lot number': self.lot_number,
+            'expiration date': self.expiration_date,
+            'sale number': self.sales_number,
             'product': {
                 'codebar': product.codebar,
                 'name': product.name
