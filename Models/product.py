@@ -44,19 +44,19 @@ class Product(db.Model):
         subcategory = Subcategory.query.filter_by(id = self.subcategory_id).first()
         category = Category.query.filter_by(id = subcategory.category_id).first()
         return {
-            'id': self.id,
+            'id': str(self.id),
             'code': str(self.code),
-            'codebar': self.codebar,
-            'name': self.name,
-            'price': self.price,
+            'codebar': str(self.codebar),
+            'name': str(self.name),
+            'price': str(self.price),
             'freeze': self.freeze,
             'tax': self.tax,
             'recipe': self.recipe,
             'regulated': self.regulated,
-            'rating': self.rating,
-            'replacement_classification': self.replacement_classification,
-            'lab_provider_name': self.lab_provider_name,
-            'subcategory_id': self.subcategory_id
+            'rating': str(self.rating),
+            'replacement_classification': str(self.replacement_classification),
+            'lab_provider_name': str(self.lab_provider_name),
+            'subcategory_id': str(self.subcategory_id)
         }
 
     def as_dict(self):

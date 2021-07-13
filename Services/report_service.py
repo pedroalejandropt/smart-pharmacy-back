@@ -20,9 +20,9 @@ def worst_sellers(month, year):
         .order_by(Sale.month)
         .order_by(Product.code)
         .distinct(Sale.year, Sale.month, Product.code, Sale.sales_number)
-    ).limit(5).all()
+    ).limit(10).all()
     for item in result:
-        sellers.append({ "year": item.year, "month": item.month, "product": item.name.title(), "Ventas": item.sales_number })
+        sellers.append({ "year": item.year, "month": item.month, "product": item.name.title(), "Ventas": round(item.sales_number, 0) })
     return sellers
 
 def best_sellers(month, year):
@@ -36,9 +36,9 @@ def best_sellers(month, year):
         .order_by(Sale.month)
         .order_by(Product.code)
         .distinct(Sale.year, Sale.month, Product.code, Sale.sales_number)
-    ).limit(5).all()
+    ).limit(10).all()
     for item in result:
-        sellers.append({ "year": item.year, "month": item.month, "product": item.name.title(), "Ventas": item.sales_number })
+        sellers.append({ "year": item.year, "month": item.month, "product": item.name.title(), "Ventas": round(item.sales_number) })
     return sellers
 
 def worst_amounts(month, year):
@@ -53,7 +53,7 @@ def worst_amounts(month, year):
         .order_by(Sale.year)
         .order_by(Sale.month)
         .distinct((Sale.sales_number * Product.price), Product.code)
-    ).limit(5).all()
+    ).limit(10).all()
     for item in result:
         total = total + item.amount
         amounts.append({ "year": item.year, "month": item.month, "product": item.name.title(), "amount": round(item.amount , 2)})
@@ -71,7 +71,7 @@ def best_amounts(month, year):
         .order_by(Sale.year)
         .order_by(Sale.month)
         .distinct((Sale.sales_number * Product.price), Product.code)
-    ).limit(5).all()
+    ).limit(10).all()
     for item in result:
         total = total + item.amount
         amounts.append({ "year": item.year, "month": item.month, "product": item.name.title(), "amount": round(item.amount , 2) })
@@ -110,7 +110,7 @@ def product_sell_variation(code, year):
     ).all()
     for item in result:
         #print(item.keys())
-        report.append({ "month": months_labels[item.month - 1], "ventas": item.sales_number })
+        report.append({ "month": months_labels[item.month - 1], "ventas": round(item.sales_number, 0) })
     return report
 
 ## Predictions
@@ -119,19 +119,19 @@ def predict_worst_sellers(month, year):
     sellers = []
     products = Product.query.filter_by(delete = False)
     for item in products:
-        sellers.append({ "year": year, "month": month, "product": item.name.title(), "Ventas": predict(int(year), int(month), float(item.code)) })
+        sellers.append({ "year": year, "month": month, "product": item.name.title(), "Ventas": round(predict(int(year), int(month), float(item.code)), 0) })
     sellers = sorted(sellers, key=itemgetter('Ventas'))
     """ print(sellers[0:5]) """
-    return sellers[0:5]
+    return sellers[0:10]
 
 def predict_best_sellers(month, year):
     sellers = []
     products = Product.query.filter_by(delete = False)
     for item in products:
-        sellers.append({ "year": year, "month": month, "product": item.name.title(), "Ventas": predict(int(year), int(month), float(item.code)) })
+        sellers.append({ "year": year, "month": month, "product": item.name.title(), "Ventas": round(predict(int(year), int(month), float(item.code)), 0) })
     sellers = sorted(sellers, key=itemgetter('Ventas'), reverse=True)
     """ print(sellers[0:5]) """
-    return sellers[0:5]
+    return sellers[0:10]
 
 def predict_worst_amounts(month, year):
     amounts = []
@@ -139,10 +139,10 @@ def predict_worst_amounts(month, year):
     products = Product.query.filter_by(delete = False)
     for item in products:
         ## OJO Aqui va 0 en el else
-        amount = round(predict(int(year), int(month), float(item.code)), 2) if (predict(int(year), int(month), float(item.code))>0) else 1
-        amounts.append({ "year": year, "month": month, "product": item.name.title(), "amount": (amount*item.price) })
+        amount = round(predict(int(year), int(month), float(item.code)), 2) if (predict(int(year), int(month), float(item.code))>0) else 0
+        amounts.append({ "year": year, "month": month, "product": item.name.title(), "amount": round((amount*item.price), 2) })
     amounts = sorted(amounts, key=itemgetter('amount'))
-    return {"total": total, "data": amounts[0:5]}
+    return {"total": total, "data": amounts[0:10]}
 
 def predict_best_amounts(month, year):
     amounts = []
@@ -150,16 +150,15 @@ def predict_best_amounts(month, year):
     products = Product.query.filter_by(delete = False)
     for item in products:
         amount = round(predict(int(year), int(month), float(item.code)), 2) if (predict(int(year), int(month), float(item.code))>0) else 0
-        amounts.append({ "year": year, "month": month, "product": item.name.title(), "amount": (amount*item.price) })
+        amounts.append({ "year": year, "month": month, "product": item.name.title(), "amount": round((amount*item.price), 2) })
     amounts = sorted(amounts, key=itemgetter('amount'), reverse=True)
-    return {"total": total, "data": amounts[0:5]}
+    return {"total": total, "data": amounts[0:10]}
 
 def predict_product_sell_variation(code, year):
     report = []
     for index, item in enumerate(months_labels):
         month = index + 1
         sales = round(predict(year, month, code), 2) if (predict(year, month, code)>0) else 0
-        report.append({ "month": item, "ventas": sales })
+        report.append({ "month": item, "ventas": round(sales, 0) })
     return report
-
 

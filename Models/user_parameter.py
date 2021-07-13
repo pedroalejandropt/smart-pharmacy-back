@@ -49,12 +49,12 @@ def parameter_schedule(min):
     global job
     global add
     add.set_value(True)
-    print('hola')
+    """ print('Start') """
     job = threading.Timer(min * 3600, parameter_schedule, args=(min,))
     job.start()
 
 def insert_initial_values(*args, **kwargs):
-    db.session.add(Parameter(frecuency=0, value=1))
+    db.session.add(Parameter(frecuency=0, value=4))
     db.session.commit()
     db.session.add(User_Parameter(user_id=1, parameter_id=1))
     db.session.commit()
@@ -63,4 +63,5 @@ def insert_initial_values(*args, **kwargs):
 event.listen(User_Parameter.__table__, 'after_create', insert_initial_values)
 
 add = Add_Parameter(False)
+parameter_schedule(4)
 job = 0

@@ -1,6 +1,7 @@
 from Models.product import Product
 from Models.user_product import User_Product
 from config import db
+import math
 from werkzeug.exceptions import NotFound
 
 def get():
@@ -9,6 +10,23 @@ def get():
     :returns: all entity
     '''
     return Product.query.filter_by(delete = False)
+
+def get_part(num):
+    '''
+    Get all entities
+    :returns: all entity
+    '''
+    products = Product.query.filter_by(delete = False)
+    products = [product.serialize for product in products]
+    len_products = len(products)
+    print(len_products)
+    parts = math.trunc(len_products / 5)
+    print(parts)
+    begin = (int(num) - 1) * (parts)
+    last = (begin + parts) if ((begin + parts) < len_products) else len_products
+    response = products[begin:5]
+
+    return response
 
 def get_by_barcode(id):
     '''

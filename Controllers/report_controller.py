@@ -20,7 +20,7 @@ def api_best_sellers(current_user):
 def api_worst_sellers(current_user):
     body = request.json
     sells = report_service.worst_sellers(body['month'], body['year'])
-    return jsonify(sells)
+    return jsonify(sells[::-1])
 
 @api_report.route('/api/v1/reports/best-amounts', methods=['POST'])
 def api_best_amounts():
@@ -49,7 +49,7 @@ def api_predict_best_sellers(current_user):
 def api_predict_worst_sellers(current_user):
     body = request.json
     sells = report_service.predict_worst_sellers(body['month'], body['year'])
-    return jsonify(sells)
+    return jsonify(sells[::-1])
 
 @api_report.route('/api/v1/reports/predict-best-amounts', methods=['POST'])
 @token_required

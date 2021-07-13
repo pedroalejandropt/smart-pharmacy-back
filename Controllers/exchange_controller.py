@@ -6,6 +6,7 @@ from Models.user_exchange import User_Exchange
 from flask_sqlalchemy import SQLAlchemy
 from Security.jwt import token_required
 from Models.exchange import Exchange
+from Models.user_parameter import add
 
 api_exchange = Blueprint('exchanges', 'exchanges')
 
@@ -16,6 +17,13 @@ def api_get(current_user):
     ''' Get all entities'''
     exchanges = exchange_service.get()
     return jsonify([exchange.serialize for exchange in exchanges])
+
+@api_exchange.route('/api/v1/exchanges/last', methods=['GET'])
+@token_required
+def api_get_last(current_user):
+    ''' Get all entities'''
+    exchange = exchange_service.get_last()
+    return jsonify(exchange.serialize)
 
 @api_exchange.route('/api/v1/exchanges/<id>', methods=['GET'])
 @token_required
@@ -38,6 +46,8 @@ def api_post():
         if 'user_id' not in user_exchange:
             return bad_request('Missing required data.')
     exchange = exchange_service.post(exchange, user_exchange)
+    if (exchange):
+        add.set_value(False)
     return jsonify(exchange.serialize)
 
 @api_exchange.route('/api/v1/exchanges/<id>', methods=['PUT'])

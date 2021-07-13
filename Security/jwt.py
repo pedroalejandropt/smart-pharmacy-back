@@ -33,5 +33,5 @@ def token_required(f):
 def generate_token(email):
     return jwt.encode({ 
         'public_id': email, 
-        'exp' : datetime.utcnow() + timedelta(minutes = 30) 
+        'exp' : datetime.utcnow() + timedelta(minutes = 120) 
     }, app.config['SECRET_KEY']) 

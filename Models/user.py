@@ -54,9 +54,11 @@ class User(db.Model):
 def insert_initial_values(*args, **kwargs):
     db.session.add(Role(name='Gerente General'))
     db.session.add(Role(name='Gerente de Logística'))
+    db.session.add(Role(name='Empleado'))
     db.session.commit()
     db.session.add(User(identificationNumber= 43563456,firstName= 'Pedro', middleName= 'Alejandro',lastName= 'Pacheco',secondLastName= 'Tripi',email= 'pedro@gmail.com',password= '123456',role_id= 1))
     db.session.add(User(identificationNumber= 35450989,firstName= 'Annemarie', middleName= '',lastName= 'Rolo',secondLastName= 'Andrade',email= 'annemarie@gmail.com',password= '654321',role_id= 1))
+    db.session.add(User(identificationNumber= 35450989,firstName= 'Maria', middleName= 'Carolina',lastName= 'Vasquez',secondLastName= '',email= 'mariav@gmail.com',password= '123456',role_id= 3))
     db.session.commit()
 
 event.listen(User.__table__, 'after_create', insert_initial_values)

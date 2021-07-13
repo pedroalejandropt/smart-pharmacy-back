@@ -8,7 +8,16 @@ def get():
     Get all entities
     :returns: all entity
     '''
-    return Exchange.query.filter_by(delete = False)
+    return Exchange.query.order_by(Exchange.date)
+
+def get_last():
+    '''
+    Get entitiy
+    :returns: entity
+    '''
+    last = Exchange.query.order_by(Exchange.date.desc()).first()
+    print(last)
+    return last
 
 def get_by_id(id):
     '''

@@ -17,6 +17,13 @@ def api_get(current_user):
     products = product_service.get()
     return jsonify([product.serialize for product in products])
 
+@api_product.route('/api/v1/products/part/<part>', methods=['GET'])
+
+def api_get_part(part=1):
+    ''' Get all entities'''
+    products = product_service.get_part(part)
+    return jsonify(products)
+
 @api_product.route('/api/v1/products/<id>', methods=['GET'])
 @token_required
 def api_get_by_id(current_user, id=0):
@@ -67,4 +74,4 @@ def api_put(current_user, id=0):
 def api_delete(current_user, id=0):
     ''' Delete entity by id'''
     res = product_service.delete(id)
-    return jsonify(res.as_dict())
+    return jsonify(res.serialize)

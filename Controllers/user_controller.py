@@ -54,51 +54,28 @@ def api_delete(current_user, id=0):
 
 @api_user.route('/api/v1/login', methods =['POST']) 
 def login(): 
-    if not request.is_json or 'email' not in request.get_json() or 'password' not in request.get_json():
+    print(type(request))
+    if not request.is_json or 'email' not in request.get_json() or 'password' not in request.get_json() or 'device' not in request.get_json():
         return bad_request('Missing required data.')
     
     user = User.query.filter_by(email = request.json['email']).first()
 
     if not user: 
-        return not_found('User does not exist')
+        return not_found('Correo Electrónico o Contraseña Incorrectos!')
+    
+    if (user.role_id == 3) and ('web' == request.json['device']):
+        return bad_request('Los Empleados comunes no pueden ingresar al sistema web!')
 
     if user.password == request.json['password']:
         token = generate_token(user.email)
         return jsonify({'user': user.serialize,'token' : token.decode('UTF-8')})
     else:
-        return bad_request('Error')
+        return bad_request('Correo Electrónico o Contraseña Incorrectos!')
 
-    """ if not auth or not auth.get('email') or not auth.get('password'): 
-        # returns 401 if any email or / and password is missing 
-        return make_response( 
-            'Could not verify', 
-            401, 
-            {'WWW-Authenticate' : 'Basic realm ="Login required !!"'} 
-        ) 
-   
-    user = User.query\ 
-        .filter_by(email = auth.get('email'))\ 
-        .first() 
-   
-    if not user: 
-        # returns 401 if user does not exist 
-        return make_response( 
-            'Could not verify', 
-            401, 
-            {'WWW-Authenticate' : 'Basic realm ="User does not exist !!"'} 
-        ) 
-   
-    if check_password_hash(user.password, auth.get('password')): 
-        # generates the JWT Token 
-        token = jwt.encode({ 
-            'public_id': user.public_id, 
-            'exp' : datetime.utcnow() + timedelta(minutes = 30) 
-        }, app.config['SECRET_KEY']) 
-   
-        return make_response(jsonify({'token' : token.decode('UTF-8')}), 201) 
-    # returns 403 if password is wrong 
-    return make_response( 
-        'Could not verify', 
-        403, 
-        {'WWW-Authenticate' : 'Basic realm ="Wrong Password !!"'} 
-    )  """
+@api_user.route('/api/v1/renew', methods =['POST']) 
+def renew_token(): 
+    if not request.is_json or 'email' not in request.get_json():
+        return bad_request('Missing required data.')
+    token = generate_token(request.json['email'])
+    return jsonify({'token' : token.decode('UTF-8')})
+
